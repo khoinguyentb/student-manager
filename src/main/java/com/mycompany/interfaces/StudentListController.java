@@ -42,7 +42,9 @@ public class StudentListController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            studentListView.HienDialog();
+            studentListView.getID();
+            studentListView.ShowDialog();
+            
         }
         
     }
@@ -62,9 +64,10 @@ public class StudentListController {
                 }
                 studentDAO.Add(student);
                 studentListView.showListStudents(studentDAO.getStudentList());
+                studentListView.ClearText();
+                studentListView.HideDialog();
             }
-            studentListView.ClearText();
-            studentListView.TatDialog();
+            
         }
         
     }
@@ -73,7 +76,7 @@ public class StudentListController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            studentListView.TatDialog();
+            studentListView.HideDialog();
         }
         
     }
@@ -85,7 +88,7 @@ public class StudentListController {
             var ListStudent = studentDAO.getStudentList();
             List<Student> SeachStudentList = new ArrayList<>();
             for(Student s : ListStudent){
-                if(ThongTinTim.equals(String.valueOf(s.getId())) || ThongTinTim.equals(s.getHoTen()) || ThongTinTim.equals(s.getDiaChi()) || ThongTinTim.equals(s.getKhoa()) || ThongTinTim.equals(s.getLop())){
+                if(ThongTinTim.equals(String.valueOf(s.getId())) || ThongTinTim.equals(s.getName()) || ThongTinTim.equals(s.getAddress()) || ThongTinTim.equals(s.getDepartment()) || ThongTinTim.equals(s.getclass())){
                     SeachStudentList.add(s);
                 }
             }

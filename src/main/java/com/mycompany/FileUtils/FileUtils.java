@@ -5,6 +5,7 @@
 package com.mycompany.FileUtils;
 
 import com.mycompany.model.Student;
+import com.mycompany.model.User;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +15,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,13 +28,13 @@ public class FileUtils {
      * 
      * @param studentList: list student to save
      */
-    public void write(List<Student> studentList,String FILE_PATH) {
+    public void write(Object obj,String FILE_PATH) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream(new File(FILE_PATH));
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(studentList);
+            oos.writeObject(obj);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -50,7 +50,7 @@ public class FileUtils {
      * 
      * @return list student
      */
-    public List<Student> read(List<Student> studentList,String FILE_PATH) {
+    public List<Student> readStudentList(List<Student> studentList,String FILE_PATH) {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
         try {
@@ -69,6 +69,26 @@ public class FileUtils {
         }
         return studentList;
     }
+    
+//    public List<User> readUser(List<User> userList,String FILE_PATH) {
+//        FileInputStream fis = null;
+//        ObjectInputStream ois = null;
+//        try {
+//            fis = new FileInputStream(new File(FILE_PATH));
+//            ois = new ObjectInputStream(fis);
+//            userList = (List<User>) ois.readObject();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            closeStream(fis);
+//            closeStream(ois);
+//        }
+//        return userList;
+//    }
  
     /**
      * close input stream

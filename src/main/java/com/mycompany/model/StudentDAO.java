@@ -23,12 +23,11 @@ public class StudentDAO {
     public StudentDAO() {
         studentList = new ArrayList<>();
         fileUtils = new FileUtils();
-        studentList = fileUtils.read(studentList,STUDENT_FILE_NAME);
+        studentList = fileUtils.readStudentList(studentList,STUDENT_FILE_NAME);
     }
     
     public void Add(Student s){
-        Student student = new Student();
-        student = s;
+        Student student = s;
         studentList.add(student);
         fileUtils.write(studentList,STUDENT_FILE_NAME);
     }
@@ -41,6 +40,7 @@ public class StudentDAO {
                     studentList.remove(i);
 		}
 	}
+        fileUtils.write(studentList,STUDENT_FILE_NAME);
     }
     
     public void sortByName(){

@@ -14,21 +14,25 @@ import java.util.List;
  */
 public class UserDAO {
 
-    private final String FILE_USER_NAME = "User.dat";
-    private FileUtils fileUtils;
-    private List<User> UserList;
+//    private final String FILE_USER_NAME = "User.dat";
+//    private FileUtils fileUtils;
+//    private List<User> UserList;
     
     public UserDAO(){
-        UserList = new ArrayList<>();
-        fileUtils = new FileUtils();
-//        UserList = fileUtils.read(UserList, FILE_USER_NAME);
+//        UserList = new ArrayList<>();
+//        fileUtils = new FileUtils();
+//        UserList = fileUtils.readUser(UserList, FILE_USER_NAME);
     }
     
-    
+//    public void Add(User us){
+//        User user = new User();
+//        user = us;
+//        UserList.add(user);
+//        fileUtils.write(UserList,FILE_USER_NAME);
+//    }
     
    public boolean checkUser(User user) {
         if (user != null) {
-
             if ("admin".equals(user.getUserName()) && "admin123@".equals(user.getPassWorld())) {
                 return true;
             }
