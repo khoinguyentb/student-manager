@@ -64,15 +64,15 @@ public class StudentListView extends javax.swing.JFrame {
         btnTimKiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListSinhVienTable = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lbTitle = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        SinhVienMenu = new javax.swing.JMenu();
+        StudentMenu = new javax.swing.JMenu();
         AddStudentMenuItem = new javax.swing.JMenuItem();
         SortMenu = new javax.swing.JMenu();
         rbtnMenuitemNone = new javax.swing.JRadioButtonMenuItem();
         rbtnMenuItemSortGPA = new javax.swing.JRadioButtonMenuItem();
         rbtnMenuItemSortName = new javax.swing.JRadioButtonMenuItem();
-        NhanVienMenu = new javax.swing.JMenu();
+        UserMenu = new javax.swing.JMenu();
 
         DialogStudentManager.setTitle("Thêm Sinh Viên");
         DialogStudentManager.setBackground(new java.awt.Color(204, 204, 255));
@@ -133,6 +133,11 @@ public class StudentListView extends javax.swing.JFrame {
 
         btnUpdate.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout DialogPanelLayout = new javax.swing.GroupLayout(DialogPanel);
         DialogPanel.setLayout(DialogPanelLayout);
@@ -213,10 +218,16 @@ public class StudentListView extends javax.swing.JFrame {
         );
 
         MenuItemUpdate.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        MenuItemUpdate.setText("Cập Nhật");
+        MenuItemUpdate.setText("Update");
+        MenuItemUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemUpdateActionPerformed(evt);
+            }
+        });
         studentPopupMenu.add(MenuItemUpdate);
 
-        MenuItemDelete.setText("Xóa");
+        MenuItemDelete.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        MenuItemDelete.setText("Delete");
         MenuItemDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenuItemDeleteActionPerformed(evt);
@@ -227,16 +238,20 @@ public class StudentListView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FrameSinhVien");
 
+        txtTimKiem.setBackground(new java.awt.Color(204, 255, 204));
         txtTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
 
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTimKiemActionPerformed(evt);
             }
         });
 
+        ListSinhVienTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 255, 51), new java.awt.Color(153, 255, 255), new java.awt.Color(255, 204, 204), new java.awt.Color(204, 204, 255)));
         ListSinhVienTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -251,9 +266,10 @@ public class StudentListView extends javax.swing.JFrame {
         ListSinhVienTable.setModel(new DefaultTableModel((Object[][]) data, columnNames));
         jScrollPane1.setViewportView(ListSinhVienTable);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Danh Sách Sinh Viên");
+        lbTitle.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTitle.setText("Student List");
+        lbTitle.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -266,29 +282,30 @@ public class StudentListView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtTimKiem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnTimKiem)))
+                        .addComponent(btnTimKiem))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem))
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        SinhVienMenu.setText("Sinh Viên");
+        StudentMenu.setText("Student");
+        StudentMenu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         AddStudentMenuItem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AddStudentMenuItem.setText("Thêm Sinh Viên");
@@ -297,9 +314,11 @@ public class StudentListView extends javax.swing.JFrame {
                 AddStudentMenuItemActionPerformed(evt);
             }
         });
-        SinhVienMenu.add(AddStudentMenuItem);
+        StudentMenu.add(AddStudentMenuItem);
 
+        SortMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         SortMenu.setText("Sắp Xếp");
+        SortMenu.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
         SortbuttonGroup.add(rbtnMenuitemNone);
         rbtnMenuitemNone.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -327,12 +346,13 @@ public class StudentListView extends javax.swing.JFrame {
         });
         SortMenu.add(rbtnMenuItemSortName);
 
-        SinhVienMenu.add(SortMenu);
+        StudentMenu.add(SortMenu);
 
-        jMenuBar1.add(SinhVienMenu);
+        jMenuBar1.add(StudentMenu);
 
-        NhanVienMenu.setText("Nhân Viên");
-        jMenuBar1.add(NhanVienMenu);
+        UserMenu.setText("User");
+        UserMenu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuBar1.add(UserMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -340,6 +360,8 @@ public class StudentListView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void ShowDialog(){
+        btnAddSV.setEnabled(true);
+        btnUpdate.setEnabled(false);
         DialogStudentManager.setVisible(true);
     }
     
@@ -376,6 +398,22 @@ public class StudentListView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuItemDeleteActionPerformed
 
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void MenuItemUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuItemUpdateActionPerformed
+
+    public void addMenuItemUpdate(ActionListener listener){
+        MenuItemUpdate.addActionListener(listener);
+    }
+    
+    public void addbtnUpdate(ActionListener listener){
+        btnUpdate.addActionListener(listener);
+    }
+    
     public boolean checkRbtnSortByName(){
         if(rbtnMenuItemSortName.isSelected()){
             return true;
@@ -620,6 +658,25 @@ public class StudentListView extends javax.swing.JFrame {
         DialogStudentManager.setVisible(true);
     }
     
+    public void UpdateStudent(Student s){
+        if(!validateName() || !validateBirthday()|| ! validateAddress()|| !validateclass()|| !validateDepartment()|| !validateGPA() || !ValidatePhoneNumber() || !ValidateEmail()){
+            return ;
+        }
+        try {
+            s.setName(txtHoTen.getText().trim());
+            s.setDateOfBirth(txtNgaySinh.getText().trim());
+            s.setAddress(txtDiaChi.getText().trim());
+            s.setDepartment(txtKhoa.getText().trim());
+            s.setClass(txtLop.getText().trim());
+            s.setGPA(Double.parseDouble(txtGPA.getText().trim()));
+            s.setPhoneNumber(txtPhoneNumber.getText().trim());
+            s.setEmail(txtGmail.getText().trim());
+        } catch (Exception e) {
+            ShowMessage(e.getMessage());
+        }
+        
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AddStudentMenuItem;
@@ -628,19 +685,19 @@ public class StudentListView extends javax.swing.JFrame {
     private javax.swing.JTable ListSinhVienTable;
     private javax.swing.JMenuItem MenuItemDelete;
     private javax.swing.JMenuItem MenuItemUpdate;
-    private javax.swing.JMenu NhanVienMenu;
-    private javax.swing.JMenu SinhVienMenu;
     private javax.swing.JMenu SortMenu;
     private javax.swing.ButtonGroup SortbuttonGroup;
+    private javax.swing.JMenu StudentMenu;
+    private javax.swing.JMenu UserMenu;
     private javax.swing.JButton btnAddSV;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbTitle;
     private javax.swing.JRadioButtonMenuItem rbtnMenuItemSortGPA;
     private javax.swing.JRadioButtonMenuItem rbtnMenuItemSortName;
     private javax.swing.JRadioButtonMenuItem rbtnMenuitemNone;

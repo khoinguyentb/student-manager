@@ -26,21 +26,36 @@ public class StudentDAO {
         studentList = fileUtils.readStudentList(studentList,STUDENT_FILE_NAME);
     }
     
-    public void Add(Student s){
-        Student student = s;
-        studentList.add(student);
+    public void updateFile(){
         fileUtils.write(studentList,STUDENT_FILE_NAME);
     }
     
+    public void Add(Student s){
+        Student student = s;
+        studentList.add(student);
+        updateFile(); 
+    }
+    
     public void deleteStudent(long id){
-        Student student = new Student();
+        Student student;
         for(int i = 0 ; i < studentList.size(); i++) {
             student = studentList.get(i);
 		if(student.getId() == id) {
                     studentList.remove(i);
 		}
 	}
-        fileUtils.write(studentList,STUDENT_FILE_NAME);
+        updateFile();
+    }
+    
+    public Student getStudent(long id){
+        Student student;
+        for(int i = 0 ; i < studentList.size(); i++) {
+            student = studentList.get(i);
+		if(student.getId() == id) {
+                    return student;
+		}
+	}
+        return null;
     }
     
     public void sortByName(){

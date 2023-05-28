@@ -18,6 +18,7 @@ import java.util.List;
 public class StudentListController {
     StudentListView studentListView;
     StudentDAO studentDAO;
+    private long id;
 
     public StudentListController(StudentListView studentListView) {
         this.studentListView =  studentListView;
@@ -30,6 +31,8 @@ public class StudentListController {
         studentListView.addSortByGPA(new AddSortGPA());
         studentListView.addSortByName(new AddSortName());
         studentListView.addMenuItemDelete(new AddMenuItemDelete());
+         studentListView.addMenuItemUpdate(new AddMenuItemUpdate());
+        studentListView.addbtnUpdate(new AddUpdateListener());
     }
     
     public void ShowStudentListView(){
@@ -127,9 +130,31 @@ public class StudentListController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            long id = Long.parseLong(studentListView.getUID());
+            id = Long.parseLong(studentListView.getUID());
             studentDAO.deleteStudent(id);
             studentListView.showListStudents(studentDAO.getStudentList());
+        }
+        
+    }
+    
+    class AddMenuItemUpdate implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            id = Long.parseLong(studentListView.getUID());
+            studentListView.ShowDialogUpdate(studentDAO.getStudent(id));
+        }
+        
+    }
+    
+    class AddUpdateListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           studentListView.UpdateStudent(studentDAO.getStudent(id));
+           studentDAO.updateFile();
+           studentListView.showListStudents(studentDAO.getStudentList());
+           studentListView.HideDialog();
         }
         
     }
