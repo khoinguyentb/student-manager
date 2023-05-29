@@ -6,8 +6,11 @@ package com.mycompany.interfaces;
 
 import com.mycompany.model.Student;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.sql.Struct;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +28,9 @@ public class StudentListView extends javax.swing.JFrame {
     private String [] columnNames = new String [] {
         "ID", "Họ Tên", "Ngày Sinh", "Địa Chỉ", "Khoa", "Lớp","GPA"};
     private Object data = new Object[][]{};
+    private int with = 100;
+    private int heightSortPanel = 69;
+    private int heightStudentMenuPanel = 120;
     
     public StudentListView() {
         initComponents();
@@ -59,20 +65,29 @@ public class StudentListView extends javax.swing.JFrame {
         studentPopupMenu = new javax.swing.JPopupMenu();
         MenuItemUpdate = new javax.swing.JMenuItem();
         MenuItemDelete = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        CardPanel = new javax.swing.JPanel();
+        StudentPanel = new javax.swing.JPanel();
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListSinhVienTable = new javax.swing.JTable();
         lbTitle = new javax.swing.JLabel();
+        UserPanel = new javax.swing.JPanel();
+        lbTitleUser = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        UserTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         StudentMenu = new javax.swing.JMenu();
+        MenuItemShowListStudent = new javax.swing.JMenuItem();
         AddStudentMenuItem = new javax.swing.JMenuItem();
         SortMenu = new javax.swing.JMenu();
         rbtnMenuitemNone = new javax.swing.JRadioButtonMenuItem();
         rbtnMenuItemSortGPA = new javax.swing.JRadioButtonMenuItem();
         rbtnMenuItemSortName = new javax.swing.JRadioButtonMenuItem();
         UserMenu = new javax.swing.JMenu();
+        MenuItemAddUser = new javax.swing.JMenuItem();
+        MenuItemShowListUser = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
 
         DialogStudentManager.setTitle("Thêm Sinh Viên");
         DialogStudentManager.setBackground(new java.awt.Color(204, 204, 255));
@@ -238,11 +253,14 @@ public class StudentListView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FrameSinhVien");
 
+        CardPanel.setLayout(new java.awt.CardLayout());
+
         txtTimKiem.setBackground(new java.awt.Color(204, 255, 204));
         txtTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
 
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        btnTimKiem.setForeground(new java.awt.Color(102, 102, 255));
         btnTimKiem.setText("Tìm Kiếm");
         btnTimKiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +269,7 @@ public class StudentListView extends javax.swing.JFrame {
             }
         });
 
+        ListSinhVienTable.setBackground(new java.awt.Color(204, 255, 204));
         ListSinhVienTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 255, 51), new java.awt.Color(153, 255, 255), new java.awt.Color(255, 204, 204), new java.awt.Color(204, 204, 255)));
         ListSinhVienTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -271,44 +290,80 @@ public class StudentListView extends javax.swing.JFrame {
         lbTitle.setText("Student List");
         lbTitle.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout StudentPanelLayout = new javax.swing.GroupLayout(StudentPanel);
+        StudentPanel.setLayout(StudentPanelLayout);
+        StudentPanelLayout.setHorizontalGroup(
+            StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                    .addComponent(lbTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(StudentPanelLayout.createSequentialGroup()
                         .addComponent(txtTimKiem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnTimKiem))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnTimKiem)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        StudentPanelLayout.setVerticalGroup(
+            StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(StudentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        CardPanel.add(StudentPanel, "card2");
+
+        UserPanel.setLayout(new java.awt.BorderLayout());
+
+        lbTitleUser.setBackground(new java.awt.Color(153, 255, 255));
+        lbTitleUser.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        lbTitleUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTitleUser.setText("User List");
+        UserPanel.add(lbTitleUser, java.awt.BorderLayout.PAGE_START);
+
+        UserTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(UserTable);
+
+        UserPanel.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        CardPanel.add(UserPanel, "card3");
+        UserPanel.setVisible(false);
+
+        getContentPane().add(CardPanel, java.awt.BorderLayout.CENTER);
 
         StudentMenu.setText("Student");
         StudentMenu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        AddStudentMenuItem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        AddStudentMenuItem.setText("Thêm Sinh Viên");
+        MenuItemShowListStudent.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        MenuItemShowListStudent.setText("Show list student");
+        MenuItemShowListStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemShowListStudentActionPerformed(evt);
+            }
+        });
+        StudentMenu.add(MenuItemShowListStudent);
+
+        AddStudentMenuItem.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        AddStudentMenuItem.setText("Add student");
+        AddStudentMenuItem.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         AddStudentMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddStudentMenuItemActionPerformed(evt);
@@ -317,8 +372,11 @@ public class StudentListView extends javax.swing.JFrame {
         StudentMenu.add(AddStudentMenuItem);
 
         SortMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        SortMenu.setText("Sắp Xếp");
-        SortMenu.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        SortMenu.setText("Sort student");
+        SortMenu.setToolTipText("");
+        SortMenu.setActionCommand("Sort");
+        SortMenu.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        SortMenu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         SortbuttonGroup.add(rbtnMenuitemNone);
         rbtnMenuitemNone.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -328,7 +386,7 @@ public class StudentListView extends javax.swing.JFrame {
 
         SortbuttonGroup.add(rbtnMenuItemSortGPA);
         rbtnMenuItemSortGPA.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        rbtnMenuItemSortGPA.setText("Theo GPA");
+        rbtnMenuItemSortGPA.setText("Sort by GPA");
         rbtnMenuItemSortGPA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnMenuItemSortGPAActionPerformed(evt);
@@ -338,7 +396,7 @@ public class StudentListView extends javax.swing.JFrame {
 
         SortbuttonGroup.add(rbtnMenuItemSortName);
         rbtnMenuItemSortName.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        rbtnMenuItemSortName.setText("Theo Tên");
+        rbtnMenuItemSortName.setText("Sort by name");
         rbtnMenuItemSortName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnMenuItemSortNameActionPerformed(evt);
@@ -352,7 +410,25 @@ public class StudentListView extends javax.swing.JFrame {
 
         UserMenu.setText("User");
         UserMenu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        MenuItemAddUser.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        MenuItemAddUser.setText("Add User");
+        UserMenu.add(MenuItemAddUser);
+
+        MenuItemShowListUser.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        MenuItemShowListUser.setText("Show List User");
+        MenuItemShowListUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemShowListUserActionPerformed(evt);
+            }
+        });
+        UserMenu.add(MenuItemShowListUser);
+
         jMenuBar1.add(UserMenu);
+
+        jMenu1.setText("Setting");
+        jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -406,6 +482,22 @@ public class StudentListView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuItemUpdateActionPerformed
 
+    private void MenuItemShowListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemShowListUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuItemShowListUserActionPerformed
+
+    private void MenuItemShowListStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemShowListStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuItemShowListStudentActionPerformed
+
+    public void addMenuItemShowListStudent(ActionListener listener){
+        MenuItemShowListStudent.addActionListener(listener);
+    }
+    
+    public void addMenuItemShowListUser(ActionListener listener){
+        MenuItemShowListUser.addActionListener(listener);
+    }
+    
     public void addMenuItemUpdate(ActionListener listener){
         MenuItemUpdate.addActionListener(listener);
     }
@@ -466,6 +558,16 @@ public class StudentListView extends javax.swing.JFrame {
     
     public void ShowMessage(String message){
         JOptionPane.showMessageDialog(this, message);
+    }
+    
+    public void ShowPanelUser(){
+        UserPanel.setVisible(true);
+        StudentPanel.setVisible(false);
+    }
+    
+    public void ShowPanelStudent(){
+        StudentPanel.setVisible(true);
+        UserPanel.setVisible(false);
     }
     
     public void showListStudents(List<Student> list) {
@@ -680,24 +782,33 @@ public class StudentListView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AddStudentMenuItem;
+    private javax.swing.JPanel CardPanel;
     private javax.swing.JPanel DialogPanel;
     private javax.swing.JDialog DialogStudentManager;
     private javax.swing.JTable ListSinhVienTable;
+    private javax.swing.JMenuItem MenuItemAddUser;
     private javax.swing.JMenuItem MenuItemDelete;
+    private javax.swing.JMenuItem MenuItemShowListStudent;
+    private javax.swing.JMenuItem MenuItemShowListUser;
     private javax.swing.JMenuItem MenuItemUpdate;
     private javax.swing.JMenu SortMenu;
     private javax.swing.ButtonGroup SortbuttonGroup;
     private javax.swing.JMenu StudentMenu;
+    private javax.swing.JPanel StudentPanel;
     private javax.swing.JMenu UserMenu;
+    private javax.swing.JPanel UserPanel;
+    private javax.swing.JTable UserTable;
     private javax.swing.JButton btnAddSV;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbTitleUser;
     private javax.swing.JRadioButtonMenuItem rbtnMenuItemSortGPA;
     private javax.swing.JRadioButtonMenuItem rbtnMenuItemSortName;
     private javax.swing.JRadioButtonMenuItem rbtnMenuitemNone;

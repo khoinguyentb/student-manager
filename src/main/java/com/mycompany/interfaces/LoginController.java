@@ -35,14 +35,17 @@ public class LoginController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            User user = loginView.getUser();
-            if(userDAO.checkUser(user)){
-                studentListView = new StudentListView();
+//            User user = loginView.getUser();
+//            if(userDAO.checkUser(user)){
+//                studentListView = new StudentListView();
+//                StudentListController studentListController = new StudentListController(studentListView);
+//                studentListController.ShowStudentListView();
+//                loginView.setVisible(false);
+//            }else loginView.showMessage("Tên đăng Nhập hoặc mật khẩu không hợp lệ!");
+            studentListView = new StudentListView();
                 StudentListController studentListController = new StudentListController(studentListView);
                 studentListController.ShowStudentListView();
                 loginView.setVisible(false);
-            }else loginView.showMessage("Tên đăng Nhập hoặc mật khẩu không hợp lệ!");
-            
         }
     
     }

@@ -4,18 +4,23 @@
  */
 package com.mycompany.model;
 
+import java.util.Date;
+
 /**
  *
  * @author vankh
  */
 public class User {
+    private long idUser;
     private String userName;
     private String passWorld;
 
     public User() {
+        this.idUser = new Date().getTime();
     }
 
     public User(String userName, String passWorld) {
+        this.idUser = new Date().getTime();
         this.userName = userName;
         this.passWorld = passWorld;
     }
@@ -35,5 +40,15 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+    }
+    
+    
     
 }
