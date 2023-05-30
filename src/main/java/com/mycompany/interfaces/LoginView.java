@@ -120,6 +120,11 @@ public class LoginView extends javax.swing.JFrame {
         btnDangNhap.addActionListener(listener);
     }
     
+    public void clearText(){
+        txtTenDangNhap.setText("");
+        txtPassword.setText("");
+    }
+    
    
     public User getUser(){
         return new User(txtTenDangNhap.getText(),String.copyValueOf(txtPassword.getPassword()));

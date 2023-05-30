@@ -6,6 +6,8 @@ package com.mycompany.interfaces;
 
 import com.mycompany.model.Student;
 import com.mycompany.model.StudentDAO;
+import com.mycompany.model.User;
+import com.mycompany.model.UserDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,11 +22,13 @@ import java.util.List;
 public class StudentListController {
     StudentListView studentListView;
     StudentDAO studentDAO;
+    UserDAO userDAO;
     private long id;
 
     public StudentListController(StudentListView studentListView) {
         this.studentListView =  studentListView;
         this.studentDAO = new StudentDAO();
+        this.userDAO = new UserDAO();
         
         studentListView.addStudentMenuItemListener(new AddSinhVienListener());
         studentListView.addAddSinhVienDialogListener(new AddSinhVienDialogListener());
@@ -37,6 +41,9 @@ public class StudentListController {
         studentListView.addbtnUpdate(new AddUpdateListener());
         studentListView.addMenuItemShowListUser(new AddMenuItemShowListUser());
         studentListView.addMenuItemShowListStudent(new AddMenuItemShowListStudent());
+        studentListView.addMenuItemAddUserListener(new AddMenuItemAddUserListener());
+        studentListView.addbtnAddUserListener(new AddbtnaddUserListener());
+        studentListView.addMenuItemLogOutListener(new AddMenuItemLogoutListener());
     }
     
     public void ShowStudentListView(){
@@ -162,10 +169,12 @@ public class StudentListController {
         }
         
     }
+    
     class AddMenuItemShowListUser implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            studentListView.showListUser(userDAO.getUserList());
             studentListView.ShowPanelUser();
         }
         
@@ -176,6 +185,35 @@ public class StudentListController {
         @Override
         public void actionPerformed(ActionEvent e) {
             studentListView.ShowPanelStudent();
+        }
+        
+    }
+    
+    class AddMenuItemAddUserListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            studentListView.getIDUser();
+        }
+        
+    }
+    class AddbtnaddUserListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            User user = studentListView.setUserInfor();
+                userDAO.Add(user);
+                studentListView.showListUser(userDAO.getUserList());
+        }
+   }
+    
+    class AddMenuItemLogoutListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LoginView loginView = new LoginView();
+            loginView.setVisible(true);
+            studentListView.setVisible(false);
         }
         
     }

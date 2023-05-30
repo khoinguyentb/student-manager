@@ -6,6 +6,7 @@ package com.mycompany.model;
 
 import com.mycompany.FileUtils.FileUtils;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,24 +15,46 @@ import java.util.List;
  */
 public class UserDAO {
 
-//    private final String FILE_USER_NAME = "User.dat";
-//    private FileUtils fileUtils;
-//    private List<User> UserList;
+    private final String FILE_USER_NAME = "User.dat";
+    private FileUtils fileUtils;
+    private List<User> UserList;
     
     public UserDAO(){
-//        UserList = new ArrayList<>();
-//        fileUtils = new FileUtils();
-//        UserList = fileUtils.readUser(UserList, FILE_USER_NAME);
+        UserList = new ArrayList<>();
+        fileUtils = new FileUtils();
+        ReadUser();
     }
     
-//    public void Add(User us){
-//        User user = new User();
-//        user = us;
-//        UserList.add(user);
-//        fileUtils.write(UserList,FILE_USER_NAME);
-//    }
+    public void Add(User us){
+        User user = us;
+        UserList.add(user);
+        UpdateFile();
+    }
     
-   public boolean checkUser(User user) {
+    public void UpdateFile(){
+        fileUtils.writeObjectToFile(UserList, FILE_USER_NAME);
+    }
+    
+    public void ReadUser(){
+         Object o = fileUtils.readObjectFromFile(FILE_USER_NAME);
+		if(o instanceof Collection) {
+                    UserList.clear();
+                    UserList.addAll((Collection) o);
+		}
+    }
+    
+    public void deleteUser(long id){
+        User user;
+        for(int i = 0 ; i < UserList.size(); i++) {
+            user = UserList.get(i);
+		if(user.getIdUser()== id) {
+                    UserList.remove(i);
+		}
+	}
+        UpdateFile();
+    }
+    
+   public boolean checkAdmin(User user) {
         if (user != null) {
             if ("admin".equals(user.getUserName()) && "admin123@".equals(user.getPassWorld())) {
                 return true;
@@ -39,4 +62,22 @@ public class UserDAO {
         }
     return false;
     }
+   
+   public boolean checkStaff(User user){
+       if(user != null){
+           for(int i = 0 ; i < UserList.size(); i++){
+               User u = UserList.get(i);
+               if(u.getUserName().equals(user.getUserName()) && u.getPassWorld().equals(user.getPassWorld())){
+                   return true;
+               }
+           }
+       }
+       return false;
+   }
+
+    public List<User> getUserList() {
+        return UserList;
+    }
+   
+   
 }

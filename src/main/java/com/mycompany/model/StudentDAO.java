@@ -6,6 +6,7 @@ package com.mycompany.model;
 
 import com.mycompany.FileUtils.FileUtils;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,11 +24,20 @@ public class StudentDAO {
     public StudentDAO() {
         studentList = new ArrayList<>();
         fileUtils = new FileUtils();
-        studentList = fileUtils.readStudentList(studentList,STUDENT_FILE_NAME);
+        ReadStudent();
+    }
+    
+    public void ReadStudent(){
+        Object o = fileUtils.readObjectFromFile(STUDENT_FILE_NAME);
+		if(o instanceof Collection) {
+                    studentList.clear();
+                    studentList.addAll((Collection) o);
+			
+		}
     }
     
     public void updateFile(){
-        fileUtils.write(studentList,STUDENT_FILE_NAME);
+        fileUtils.writeObjectToFile(studentList, STUDENT_FILE_NAME);
     }
     
     public void Add(Student s){

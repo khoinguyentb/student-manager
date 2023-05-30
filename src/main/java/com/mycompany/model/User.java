@@ -4,13 +4,14 @@
  */
 package com.mycompany.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author vankh
  */
-public class User {
+public class User implements Serializable{
     private long idUser;
     private String userName;
     private String passWorld;
