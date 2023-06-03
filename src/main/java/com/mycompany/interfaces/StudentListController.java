@@ -10,8 +10,6 @@ import com.mycompany.model.User;
 import com.mycompany.model.UserDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class StudentListController {
         studentListView.addStudentMenuItemListener(new AddSinhVienListener());
         studentListView.addAddSinhVienDialogListener(new AddSinhVienDialogListener());
         studentListView.addBtnHuyListener(new AddBtnHuyListener());
-        studentListView.addTimKiemListener(new AddTimKiemListener());
+        
         studentListView.addSortByGPA(new AddSortGPA());
         studentListView.addSortByName(new AddSortName());
         studentListView.addMenuItemDelete(new AddMenuItemDelete());
@@ -94,22 +92,7 @@ public class StudentListController {
         }
         
     }
-    class AddTimKiemListener implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String ThongTinTim = studentListView.ThongTinTim();
-            var ListStudent = studentDAO.getStudentList();
-            List<Student> SeachStudentList = new ArrayList<>();
-            for(Student s : ListStudent){
-                if(ThongTinTim.equals(String.valueOf(s.getId())) || ThongTinTim.equals(s.getName()) || ThongTinTim.equals(s.getAddress()) || ThongTinTim.equals(s.getDepartment()) || ThongTinTim.equals(s.getclass())){
-                    SeachStudentList.add(s);
-                }
-            }
-            studentListView.showListStudents(SeachStudentList);
-        }
-        
-    }
+   
     
     class AddSortGPA implements ActionListener {
 

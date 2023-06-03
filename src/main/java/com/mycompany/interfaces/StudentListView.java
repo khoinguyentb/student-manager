@@ -5,11 +5,15 @@
 package com.mycompany.interfaces;
 
 import com.mycompany.model.Student;
+import com.mycompany.model.StudentDAO;
 import com.mycompany.model.User;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,11 +29,44 @@ public class StudentListView extends javax.swing.JFrame {
     private String [] columnNamesUser = new String [] {
         "ID","User Name", "Passworld"};
     private Object data = new Object[][]{};
-    
+    private StudentDAO studenDAO;
     public StudentListView() {
+        studenDAO = new StudentDAO();
         initComponents();
         ListSinhVienTable.setComponentPopupMenu(studentPopupMenu);
+        txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SeachStudent();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SeachStudent();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
     }
+    
+   private void SeachStudent(){
+       if(!"".equals(ThongTinTim())){
+           String ThongTinTim = ThongTinTim();
+            List<Student> SeachStudentList = new ArrayList<>();
+            for(Student s : studenDAO.getStudentList()){
+                if(ThongTinTim.equals(String.valueOf(s.getId())) || ThongTinTim.equals(s.getName()) || ThongTinTim.equals(s.getAddress()) || ThongTinTim.equals(s.getDepartment()) || ThongTinTim.equals(s.getclass())){
+                    SeachStudentList.add(s);
+                }
+            }
+            showListStudents(SeachStudentList);
+       }
+       else{
+           showListStudents(studenDAO.getStudentList());
+       }
+   }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -57,7 +94,6 @@ public class StudentListView extends javax.swing.JFrame {
         CardPanel = new javax.swing.JPanel();
         StudentPanel = new javax.swing.JPanel();
         txtTimKiem = new javax.swing.JTextField();
-        btnTimKiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListSinhVienTable = new javax.swing.JTable();
         lbTitle = new javax.swing.JLabel();
@@ -85,7 +121,7 @@ public class StudentListView extends javax.swing.JFrame {
 
         DialogStudentManager.setTitle("Thêm Sinh Viên");
         DialogStudentManager.setBackground(new java.awt.Color(204, 204, 255));
-        DialogStudentManager.setBounds(new java.awt.Rectangle(100, 100, 500, 450));
+        DialogStudentManager.setBounds(new java.awt.Rectangle(100, 100, 580, 520));
         DialogStudentManager.setModal(true);
 
         DialogPanel.setBackground(new java.awt.Color(153, 153, 255));
@@ -165,7 +201,7 @@ public class StudentListView extends javax.swing.JFrame {
                     .addGroup(DialogPanelLayout.createSequentialGroup()
                         .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                        .addComponent(txtGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
                     .addGroup(DialogPanelLayout.createSequentialGroup()
                         .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -210,7 +246,7 @@ public class StudentListView extends javax.swing.JFrame {
                     .addComponent(btnHuy)
                     .addComponent(btnAddSV)
                     .addComponent(btnUpdate))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         btnUpdate.setEnabled(false);
@@ -253,16 +289,6 @@ public class StudentListView extends javax.swing.JFrame {
         txtTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtTimKiem.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Search", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
 
-        btnTimKiem.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        btnTimKiem.setForeground(new java.awt.Color(102, 102, 255));
-        btnTimKiem.setText("Tìm Kiếm");
-        btnTimKiem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
-            }
-        });
-
         ListSinhVienTable.setBackground(new java.awt.Color(204, 255, 204));
         ListSinhVienTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 255, 51), new java.awt.Color(153, 255, 255), new java.awt.Color(255, 204, 204), new java.awt.Color(204, 204, 255)));
         ListSinhVienTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -293,10 +319,7 @@ public class StudentListView extends javax.swing.JFrame {
                 .addGroup(StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                     .addComponent(lbTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(StudentPanelLayout.createSequentialGroup()
-                        .addComponent(txtTimKiem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnTimKiem)))
+                    .addComponent(txtTimKiem))
                 .addContainerGap())
         );
         StudentPanelLayout.setVerticalGroup(
@@ -305,9 +328,7 @@ public class StudentListView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(StudentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
@@ -368,10 +389,9 @@ public class StudentListView extends javax.swing.JFrame {
                 .addComponent(btnAddUser)
                 .addContainerGap())
             .addGroup(UserPanelLayout.createSequentialGroup()
-                .addGroup(UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTitleUser, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lbTitleUser, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 2, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         UserPanelLayout.setVerticalGroup(
             UserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,10 +535,6 @@ public class StudentListView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHuyActionPerformed
 
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTimKiemActionPerformed
-
     private void AddStudentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStudentMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AddStudentMenuItemActionPerformed
@@ -619,9 +635,6 @@ public class StudentListView extends javax.swing.JFrame {
     
     public void addStudentMenuItemListener(ActionListener listener){
         AddStudentMenuItem.addActionListener(listener);
-    }
-    public void addTimKiemListener(ActionListener listener){
-        btnTimKiem.addActionListener(listener);
     }
     
     public String ThongTinTim(){
@@ -830,7 +843,7 @@ public class StudentListView extends javax.swing.JFrame {
     }
     
     public User setUserInfor(){
-        if(!validateUserName() || !validateUserName()){
+        if(!validateUserName() || !validatePassWorld()){
             return null;
         }
         
@@ -949,7 +962,6 @@ public class StudentListView extends javax.swing.JFrame {
     private javax.swing.JButton btnAddSV;
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnHuy;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
