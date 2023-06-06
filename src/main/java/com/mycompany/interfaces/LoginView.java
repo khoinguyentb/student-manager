@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
  * @author vankh
  */
 public class LoginView extends javax.swing.JFrame {
-
-    StudentListView studentListView;
     
     /**
      * Creates new form LoginView

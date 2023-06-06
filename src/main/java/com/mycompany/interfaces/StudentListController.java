@@ -112,12 +112,10 @@ public class StudentListController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(studentListView.checkRbtnSortByName()){
-                 studentDAO.sortByName();
+                studentDAO.sortByName();
                 studentListView.showListStudents(studentDAO.getStudentList());
-            }
-           
-        }
-        
+            }          
+        }       
     }
     
     class AddMenuItemDelete implements ActionListener{

@@ -8,7 +8,11 @@ import com.mycompany.model.Student;
 import com.mycompany.model.StudentDAO;
 import com.mycompany.model.User;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.text.spi.DateFormatProvider;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -138,6 +142,11 @@ public class StudentListView extends javax.swing.JFrame {
 
         txtNgaySinh.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtNgaySinh.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Date of Birth", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
+        txtNgaySinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgaySinhActionPerformed(evt);
+            }
+        });
 
         txtDiaChi.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtDiaChi.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Address", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -579,6 +588,11 @@ public class StudentListView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuItemLogoutActionPerformed
 
+    private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtNgaySinhActionPerformed
+
     public void addMenuItemLogOutListener(ActionListener listener){
         MenuItemLogout.addActionListener(listener);
     }
@@ -756,11 +770,29 @@ public class StudentListView extends javax.swing.JFrame {
         return true;
     }
     
+    
+    public boolean isValidFormat(String format, String value) {
+        Date date = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            date = (Date) sdf.parse(value);
+            if (!value.equals(sdf.format(date))) {
+                date = null;
+            }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return date != null;
+    }
+    
     private boolean validateBirthday() {
         String ngaySinh = txtNgaySinh.getText();
         if (ngaySinh == null || "".equals(ngaySinh.trim())) {
             txtNgaySinh.requestFocus();
             ShowMessage("Name không được trống.");
+            return false;
+        }else if(!isValidFormat("dd/MM/yyyy", ngaySinh)){
+            ShowMessage("Ngày sinh không đúng định dạng");
             return false;
         }
         return true;
